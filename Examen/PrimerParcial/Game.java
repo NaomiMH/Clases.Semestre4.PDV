@@ -14,12 +14,14 @@ import java.util.Iterator;
  *
  * @author NamiDW
  * 
- * Juego del raton atrapando gatos que caen del cielo.
- * Utiliza musica de fondo en loop.
- * Arreglo de enemigos.
- * Los enemigos suben velocidad segun las vidas perdidas.
- * En el titulo se muestra los puntos.
- * 5 vidas.
+ * Juego del pajaro pasando por obstaculos.
+ * Se pulsa espacio para hacerlo elevarse
+ * En caso contrario va descendiendo lentamente
+ * Tiene que esquivar a los enemigos que vienen en contra.
+ * 10 vidas.
+ * Pausa.
+ * Opcion de guardar partida y cargar.
+ * 
  */
 public class Game implements Runnable {
     private BufferStrategy bs;      // to have several buffers when displaying
@@ -91,6 +93,30 @@ public class Game implements Runnable {
         return height;
     }
 
+    public ArrayList<Enemy> getEnemies() {
+        return enemies;
+    }
+
+    public void setPuntuacion(int puntuacion) {
+        this.puntuacion = puntuacion;
+    }
+
+    public void setContChoque(int contChoque) {
+        this.contChoque = contChoque;
+    }
+
+    public int getContChoque() {
+        return contChoque;
+    }
+
+    public int getPuntuacion() {
+        return puntuacion;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
     private void agregarEnemigo(){
         espacio = (int) (Math.random()*4);
         System.out.println(espacio);
@@ -117,7 +143,8 @@ public class Game implements Runnable {
     }
     
     private void reordenar(){
-        //esta funcion tiene que eliminar a todos los enemigos existentes, mandar a crear nuevos y reiniciar al jugador.
+        //esta funcion tiene que eliminar a todos los enemigos existentes, 
+        //      mandar a crear nuevos y reiniciar al jugador.
         
         //reiniciar al jugador
         player.setX(0);
@@ -165,7 +192,8 @@ public class Game implements Runnable {
         while (running) {
             // setting the time now to the actual time
             now = System.nanoTime();
-            // acumulating to delta the difference between times in timeTick units
+            // acumulating to delta the difference between times in timeTick
+            //      units
             delta += (now - lastTime) / timeTick;
             // updating the last time
             lastTime = now;
@@ -217,8 +245,8 @@ public class Game implements Runnable {
                 }
             }
             
-            //reset position if it get out of the screen at the button
-            if(enemy.getX() <= 0){
+            //reset position if it get out of the screen
+            if(enemy.getX() <= 80){
                 enemies.remove(enemy);
                 itr = enemies.iterator();
                 enemigoAtrapado.play();
@@ -243,6 +271,7 @@ public class Game implements Runnable {
         else if(gameover){
             risaGameover.play();
             musica.stop();
+            running = false;
         }
         else if(choque){
             if(keyManager.R){
@@ -251,6 +280,10 @@ public class Game implements Runnable {
             }
         }
         else if(pausa){
+            if(keyManager.S)
+                Files.saveFile(this);
+            if(keyManager.L)
+                Files.loadFile(this);
             if(keyManager.P)
                 pausa=false;
         }
