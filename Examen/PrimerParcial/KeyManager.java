@@ -21,6 +21,8 @@ public class KeyManager implements KeyListener {
     public boolean space;   //flag to shoot
     public boolean R;
     public boolean P;
+    public boolean S;
+    public boolean L;
 
     private boolean keys[];  // to store all the flags for every key
     
@@ -37,7 +39,7 @@ public class KeyManager implements KeyListener {
         // set true to every key pressed
         keys[e.getKeyCode()] = true;
         //set flag space of if need
-        if(e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_R || e.getKeyCode() == KeyEvent.VK_P)
+        if(e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_R || e.getKeyCode() == KeyEvent.VK_P || e.getKeyCode() == KeyEvent.VK_S || e.getKeyCode() == KeyEvent.VK_L)
             keys[e.getKeyCode()] = false;
     }
 
@@ -46,7 +48,7 @@ public class KeyManager implements KeyListener {
         // set false to every key released
         keys[e.getKeyCode()] = false;
         //set flag space of if need
-        if(e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_R || e.getKeyCode() == KeyEvent.VK_P)
+        if(e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_R || e.getKeyCode() == KeyEvent.VK_P || e.getKeyCode() == KeyEvent.VK_S || e.getKeyCode() == KeyEvent.VK_L)
             keys[e.getKeyCode()] = true;
     }
     
@@ -64,5 +66,9 @@ public class KeyManager implements KeyListener {
         keys[KeyEvent.VK_P] = false;
         space = keys[KeyEvent.VK_SPACE];
         keys[KeyEvent.VK_SPACE] = false;
+        S = keys[KeyEvent.VK_S];
+        keys[KeyEvent.VK_S] = false;
+        L = keys[KeyEvent.VK_L];
+        keys[KeyEvent.VK_L] = false;
     }
 }
