@@ -54,15 +54,19 @@ public class Player extends Item{
         // reset x position and y position if colision
         if (getX() + 60 >= game.getWidth()) {
             setX(game.getWidth() - 60);
+            musica.play();
         }
         else if (getX() <= -30) {
             setX(-30);
+            musica.play();
         }
         if (getY() + 80 >= game.getHeight()) {
             setY(game.getHeight() - 80);
+            musica.play();
         }
         else if (getY() <= -20) {
             setY(-20);
+            musica.play();
         }
     }
 
