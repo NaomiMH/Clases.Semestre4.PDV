@@ -231,12 +231,6 @@ public class Game implements Runnable {
             bricks.remove(wall);
             itr = bricks.iterator();
         }
-        itr = vidas.iterator();
-        while(itr.hasNext()){
-            Vida vida = (Vida)itr.next();
-            vidas.remove(vida);
-            itr = vidas.iterator();
-        }
     }
 
     /**
@@ -304,7 +298,7 @@ public class Game implements Runnable {
     private void tick() {
         keyManager.tick();
         
-        if(vidas.size()>0 && !choque && !pausa && !ganar){
+        if(!vidas.isEmpty() && !choque && !pausa && !ganar){
             //avancing player
             player.tick();
             //moving the enemies
@@ -433,24 +427,19 @@ public class Game implements Runnable {
             }
             
             //ganaste el juego
-            if(enemies.size()==0)
+            if(enemies.isEmpty())
                 ganar=true;
             //pausar el juego
             if(keyManager.P){
                 pausa=true;
             }
-            if(keyManager.space && bulletsPlayer.size()==0){
+            if(keyManager.space && bulletsPlayer.isEmpty()){
                 bulletsPlayer.add(new BulletPlayer(player.getX()+35-10,player.getY()-25,20,20,this));
             }
-            if(choque && vidas.size()>0){
-                itr = vidas.iterator();
-                vidas.remove((Vida)itr.next());
+            if(choque && !vidas.isEmpty()){
+                vidas.remove(vidas.size()-1);
             }
             
-            if(vidas.size()==0){
-                risaGameover.play();
-                musica.stop();
-            }
         //las condicines de lo que pasa cuando se detiene
         }
         else if(choque){
@@ -466,6 +455,13 @@ public class Game implements Runnable {
                 Files.loadFile(this);
             if(keyManager.P)
                 pausa=false;
+        }
+        
+        if(vidas.isEmpty()){
+            risaGameover.play();
+            musica.stop();
+            render();
+            running = false;
         }
         
         //checa puntuacion;
@@ -521,7 +517,7 @@ public class Game implements Runnable {
             //imagen segun el estado del juego
             if(pausa)
                 g.drawImage(Assets.backgroundPausa, 0, 0, width, height, null);
-            if(vidas.size()==0)
+            if(vidas.isEmpty())
                 g.drawImage(Assets.gameover, 0, 0, width, height, null);
             if(ganar)
                 g.drawImage(Assets.ganaste, 0, 0, width, height, null);
