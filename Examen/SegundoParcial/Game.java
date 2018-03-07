@@ -57,7 +57,6 @@ public class Game implements Runnable {
     private boolean pausa;
     private boolean running;        // to set the game
     private boolean ganar;
-    private boolean enemigoMatado;
     private boolean enemigoCambiarDireccion;
     
     
@@ -79,7 +78,6 @@ public class Game implements Runnable {
         choque = false;
         pausa=false;
         ganar=false;
-        enemigoMatado = false;
         enemigoCambiarDireccion = false;
         //int
         puntuacion = 0;
@@ -360,7 +358,7 @@ public class Game implements Runnable {
                         //due to problems with iterator, reset the iterator
                         itr = bulletsPlayer.iterator();
                         itr2 = enemies.iterator();
-                        enemigoMatado = true;
+                        puntuacion+=(100*enemy.getColor());
                     }
                 }
             
@@ -381,11 +379,6 @@ public class Game implements Runnable {
                         itr = bulletsPlayer.iterator();
                     }
                 }
-            }
-            //para que no se agrege varias veces la puntuacion.
-            if(enemigoMatado){
-                enemigoMatado=false;
-                puntuacion+=100;
             }
             
             //balas enemigas
