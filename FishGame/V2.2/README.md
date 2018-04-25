@@ -1,8 +1,4 @@
 # FishGame V2.2 by NirvanaGaming
-FishGame
-
---
-
 Emilio González Guerra
 
 Naomi Macías Honti
